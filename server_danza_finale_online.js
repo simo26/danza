@@ -58,7 +58,6 @@ app.get("/getStudenti", function (req, res) {
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
-            startConnection();
         } else {
             console.log(result);
             res.send(result);
@@ -72,7 +71,6 @@ app.get("/getStudente/:id", function (req, res) {
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
-            startConnection();
         } else {
             console.log(result);
             res.send(result[0]);
@@ -82,6 +80,7 @@ app.get("/getStudente/:id", function (req, res) {
 
 
 app.put("/PutCartella", function (req, res) {
+    startConnection();
     console.log(req.body.path);
     cartellapath = req.body.path;
 });
