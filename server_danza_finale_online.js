@@ -10,7 +10,7 @@ var mysql = require("mysql")
 function startConnection() {
     console.error('CONNECTING');
     
-    var conn = mysql.createConnection({
+    var connection = mysql.createConnection({
     host: "sql11.freesqldatabase.com",
     user: "sql11648539",
     password: "7lXk2QTg7A",
