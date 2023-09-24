@@ -58,7 +58,6 @@ app.get("/getStudenti", function (req, res) {
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
-            startConnection();
         } else {
             console.log(result);
             res.send(result);
@@ -72,7 +71,6 @@ app.get("/getStudente/:id", function (req, res) {
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
-            startConnection();
         } else {
             console.log(result);
             res.send(result[0]);
@@ -111,7 +109,6 @@ app.post("/addStudente", upload.single('certificato_medico'), function (req, res
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server" });
-            startConnection();
         } else {
             console.log(result);
             res.send(result); // Invia il dato JSON come risposta
@@ -131,7 +128,6 @@ app.put("/UpdateStudente/:id", upload.single('certificato_medico'), function (re
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server" });
-            startConnection();
         } else {
             console.log(result);
             res.send(result); // Invia il dato JSON come risposta
@@ -146,7 +142,6 @@ app.put("/UpdateMensile/:id", function (req, res) {
         if (err) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server" });
-            startConnection();
         } else {
             console.log(result);
             res.send(result); // Invia il dato JSON come risposta
@@ -160,7 +155,6 @@ app.delete("/DeleteStudente/:id", function(req, res){
         if (err) {
           console.log(err);
           res.status(500).json({ error: "Errore nel server" });
-            startConnection();
         } else {
           console.log(result);
           res.send(result); // Invia il dato JSON come risposta
