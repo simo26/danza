@@ -6,14 +6,33 @@ var cors = require("cors")
 var bodyParser = require("body-parser")
 
 var mysql = require("mysql")
-const { hostname } = require("os")
-var conn = mysql.createConnection({
+
+function startConnection() {
+    console.error('CONNECTING');
+    
+    var conn = mysql.createConnection({
     host: "sql11.freesqldatabase.com",
     user: "sql11648539",
     password: "7lXk2QTg7A",
     database: "sql11648539",
     hostname: "0.0.0.0"
 })
+    connection.connect(function(err) {
+        if (err) {
+            console.error('CONNECT FAILED', err.code);
+            startConnection();
+        }
+        else
+            console.error('CONNECTED');
+    });
+    connection.on('error', function(err) {
+        if (err.fatal)
+            startConnection();
+    });
+}
+
+const { hostname } = require("os")
+
 
 
 app.use(
@@ -29,6 +48,7 @@ app.use(bodyParser.urlencoded({
 
 let cartellapath;  // Dichiarazione della variabile esterna
 
+startConnection();
 
 
 app.get("/getStudenti", function (req, res) {
