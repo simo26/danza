@@ -10,14 +10,14 @@ var mysql = require("mysql")
 function startConnection() {
     console.error('CONNECTING');
     
-    var connection = mysql.createConnection({
+    var conn = mysql.createConnection({
     host: "sql11.freesqldatabase.com",
     user: "sql11648539",
     password: "7lXk2QTg7A",
     database: "sql11648539",
     hostname: "0.0.0.0"
 })
-    connection.connect(function(err) {
+    conn.connect(function(err) {
         if (err) {
             console.error('CONNECT FAILED', err.code);
             startConnection();
@@ -25,7 +25,7 @@ function startConnection() {
         else
             console.error('CONNECTED');
     });
-    connection.on('error', function(err) {
+    conn.on('error', function(err) {
         if (err.fatal)
             startConnection();
     });
