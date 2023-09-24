@@ -7,10 +7,12 @@ var bodyParser = require("body-parser")
 
 var mysql = require("mysql")
 
+let conn
+
 function startConnection() {
     console.error('CONNECTING');
     
-    var conn = mysql.createConnection({
+    conn = mysql.createConnection({
     host: "sql11.freesqldatabase.com",
     user: "sql11648539",
     password: "7lXk2QTg7A",
