@@ -1,40 +1,19 @@
 var express = require("express")
 const multer = require('multer');
 var app = express()
+//const upload = multer({ dest: 'https://drive.google.com/drive/folders/1SFj8Tq-CC35XXl8KwrOPVttpoVxVKSDG?usp=sharing' }); // Specifica la directory di destinazione per i file caricati
 var fs = require("fs")
 var cors = require("cors")
 var bodyParser = require("body-parser")
 
 var mysql = require("mysql")
-
-let conn
-
-function startConnection() {
-    console.error('CONNECTING');
-    
-    conn = mysql.createConnection({
-    host: "sql11.freesqldatabase.com",
-    user: "sql11648539",
-    password: "7lXk2QTg7A",
-    database: "sql11648539",
-    hostname: "0.0.0.0"
-})
-    conn.connect(function(err) {
-        if (err) {
-            console.error('CONNECT FAILED', err.code);
-            startConnection();
-        }
-        else
-            console.error('CONNECTED');
-    });
-    conn.on('error', function(err) {
-        if (err.fatal)
-            startConnection();
-    });
-}
-
 const { hostname } = require("os")
-
+var conn = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "danza"
+})
 
 
 app.use(
@@ -50,19 +29,28 @@ app.use(bodyParser.urlencoded({
 
 let cartellapath;  // Dichiarazione della variabile esterna
 
-startConnection();
 
 
-setInterval(startConnection, 10 * 60 * 1000);  // 10 minuti in millisecondi
+// app.get("/getAllPersone", function (req, res) {
+//     conn.query("SELECT nome FROM persone", function (err, result) {
+//         if (err) {
+//             console.log(err);
+//             res.status(500).json({ error: "Errore nel server" });
+//         } else {
+//             console.log(result);
+//             res.send(result); 
+//         }
+//     });
+// });
 
 
 app.get("/getStudenti", function (req, res) {
     conn.query("SELECT * FROM studente", function (err, result) {
         if (err) {
             console.log(err);
-            res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
+            res.status(500).json({ error: "Errore nel server" });
         } else {
-            //console.log(result);
+            console.log(result);
             res.send(result);
         }
     });
@@ -73,7 +61,7 @@ app.get("/getStudente/:id", function (req, res) {
     conn.query("SELECT * FROM studente WHERE id = " + req.params.id, function (err, result) {
         if (err) {
             console.log(err);
-            res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
+            res.status(500).json({ error: "Errore nel server" });
         } else {
             console.log(result);
             res.send(result[0]);
@@ -85,9 +73,21 @@ app.get("/getStudente/:id", function (req, res) {
 app.put("/PutCartella", function (req, res) {
     console.log(req.body.path);
     cartellapath = req.body.path;
-    
 });
 
+
+
+// app.post("/addStudente", function (req, res) {
+//     conn.query("INSERT INTO `studente` (`nome`, `cognome`, `cf`, `nato_a`, `residenza`, `via`, `n_civico`, `corso`, `retta_mensile`, `telefono`, `email`, `certificato_medico`, `pagato_mensile`, `quota_ass`, `gen`, `feb`, `mar`, `apr`, `magg`, `giu`, `lug`, `ago`, `sett`, `ott`, `nov`, `dic` ) VALUES ('" + req.body.nome + "', '" + req.body.cognome + "', '" + req.body.cf + "', '" + req.body.nato_a + "', '" + req.body.residenza + "', '" + req.body.via + "', '" + req.body.n_civico + "', '" + req.body.corso + "', '" + req.body.retta_mensile + "', '" + req.body.telefono + "', '" + req.body.email + "', '" + req.body.certificato_medico + "', '" + req.body.pagato_mensile + "', '0','0','0','0','0','0','0','0','0','0','0','0','0')", function (err, result) {
+//         if (err) {
+//             console.log(err);
+//             res.status(500).json({ error: "Errore nel server" });
+//         } else {
+//             console.log(result);
+//             res.send(result); // Invia il dato JSON come risposta
+//         }
+//     });
+// });
 
 
 const storage = multer.diskStorage({
@@ -104,7 +104,6 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage });
 
 app.post("/addStudente", upload.single('certificato_medico'), function (req, res) {
-    console.log(cartellapath)
     const certificato_medico = req.file;  // File caricato
     const certificato_medicoPath = certificato_medico ? certificato_medico.path : null;
 
