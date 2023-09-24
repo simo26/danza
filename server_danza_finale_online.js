@@ -62,7 +62,7 @@ app.get("/getStudenti", function (req, res) {
             console.log(err);
             res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
         } else {
-            console.log(result);
+            //console.log(result);
             res.send(result);
         }
     });
@@ -104,6 +104,7 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage });
 
 app.post("/addStudente", upload.single('certificato_medico'), function (req, res) {
+    conosole.log(cartellapath)
     const certificato_medico = req.file;  // File caricato
     const certificato_medicoPath = certificato_medico ? certificato_medico.path : null;
 
