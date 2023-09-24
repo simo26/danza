@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({
 
 let cartellapath;  // Dichiarazione della variabile esterna
 
-startConnection();
+//startConnection();
 
 
 app.get("/getStudenti", function (req, res) {
