@@ -1,7 +1,6 @@
 var express = require("express")
 const multer = require('multer');
 var app = express()
-//const upload = multer({ dest: 'https://drive.google.com/drive/folders/1SFj8Tq-CC35XXl8KwrOPVttpoVxVKSDG?usp=sharing' }); // Specifica la directory di destinazione per i file caricati
 var fs = require("fs")
 var cors = require("cors")
 var bodyParser = require("body-parser")
@@ -9,10 +8,11 @@ var bodyParser = require("body-parser")
 var mysql = require("mysql")
 const { hostname } = require("os")
 var conn = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "danza"
+    host: "sql11.freesqldatabase.com",
+    user: "sql11648539",
+    password: "7lXk2QTg7A",
+    database: "sql11648539",
+    hostname: "0.0.0.0"
 })
 
 
@@ -29,19 +29,6 @@ app.use(bodyParser.urlencoded({
 
 let cartellapath;  // Dichiarazione della variabile esterna
 
-
-
-// app.get("/getAllPersone", function (req, res) {
-//     conn.query("SELECT nome FROM persone", function (err, result) {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).json({ error: "Errore nel server" });
-//         } else {
-//             console.log(result);
-//             res.send(result); 
-//         }
-//     });
-// });
 
 
 app.get("/getStudenti", function (req, res) {
@@ -75,19 +62,6 @@ app.put("/PutCartella", function (req, res) {
     cartellapath = req.body.path;
 });
 
-
-
-// app.post("/addStudente", function (req, res) {
-//     conn.query("INSERT INTO `studente` (`nome`, `cognome`, `cf`, `nato_a`, `residenza`, `via`, `n_civico`, `corso`, `retta_mensile`, `telefono`, `email`, `certificato_medico`, `pagato_mensile`, `quota_ass`, `gen`, `feb`, `mar`, `apr`, `magg`, `giu`, `lug`, `ago`, `sett`, `ott`, `nov`, `dic` ) VALUES ('" + req.body.nome + "', '" + req.body.cognome + "', '" + req.body.cf + "', '" + req.body.nato_a + "', '" + req.body.residenza + "', '" + req.body.via + "', '" + req.body.n_civico + "', '" + req.body.corso + "', '" + req.body.retta_mensile + "', '" + req.body.telefono + "', '" + req.body.email + "', '" + req.body.certificato_medico + "', '" + req.body.pagato_mensile + "', '0','0','0','0','0','0','0','0','0','0','0','0','0')", function (err, result) {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).json({ error: "Errore nel server" });
-//         } else {
-//             console.log(result);
-//             res.send(result); // Invia il dato JSON come risposta
-//         }
-//     });
-// });
 
 
 const storage = multer.diskStorage({
