@@ -57,7 +57,8 @@ app.get("/getStudenti", function (req, res) {
     conn.query("SELECT * FROM studente", function (err, result) {
         if (err) {
             console.log(err);
-            res.status(500).json({ error: "Errore nel server" });
+            res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
+            startConnection();
         } else {
             console.log(result);
             res.send(result);
@@ -70,7 +71,8 @@ app.get("/getStudente/:id", function (req, res) {
     conn.query("SELECT * FROM studente WHERE id = " + req.params.id, function (err, result) {
         if (err) {
             console.log(err);
-            res.status(500).json({ error: "Errore nel server" });
+            res.status(500).json({ error: "Errore nel server. Ritento la connessione" });
+            startConnection();
         } else {
             console.log(result);
             res.send(result[0]);
