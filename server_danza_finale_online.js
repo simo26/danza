@@ -50,7 +50,10 @@ app.use(bodyParser.urlencoded({
 
 let cartellapath;  // Dichiarazione della variabile esterna
 
-//startConnection();
+startConnection();
+
+
+setInterval(startConnection, 10 * 60 * 1000);  // 10 minuti in millisecondi
 
 
 app.get("/getStudenti", function (req, res) {
@@ -80,7 +83,6 @@ app.get("/getStudente/:id", function (req, res) {
 
 
 app.put("/PutCartella", function (req, res) {
-        startConnection();
     console.log(req.body.path);
     cartellapath = req.body.path;
     
